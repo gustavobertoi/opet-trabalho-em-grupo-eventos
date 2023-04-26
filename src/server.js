@@ -3,6 +3,7 @@ const path = require("node:path");
 const express = require("express");
 const bodyParser = require("body-parser");
 
+const authController = require('./controllers/auth.controller')
 const eventsController = require("./controllers/events.controller");
 
 const config = require("./config");
@@ -28,7 +29,11 @@ app.post("/events/create", eventsController.createEvent);
 
 // Auth (Login + Criar conta)
 // TODO: Separar em outra rota
-app.get("/", () => {});
-app.get("/signup", () => {});
+app.get("/", authController.login);
+app.post("/signin", authController.signIn);
+
+app.get("/signup", authController.createAccount);
+app.post("/signup/create", authController.signUp);
+
 
 app.listen(port, () => console.log(`Application has been started at ${port}`));
